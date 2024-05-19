@@ -35,9 +35,9 @@ public class AnswerController {
             return "question_detail";
         }
 
-        this.answerService.create(question, answerForm.getContent(), siteUser);
+        Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
 
-        return "redirect:/question/detail/%s".formatted(id);
+        return "redirect:/question/detail/%s#answer_%s".formatted(id, answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -69,7 +69,7 @@ public class AnswerController {
 
         this.answerService.modify(answer, answerForm.getContent());
 
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%s#answer_%s".formatted(answer.getQuestion().getId(), id);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -94,6 +94,6 @@ public class AnswerController {
 
         this.answerService.vote(answer, siteUser);
 
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%s#answer_%s".formatted(answer.getQuestion().getId(), id);
     }
 }
